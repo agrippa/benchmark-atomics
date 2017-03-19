@@ -17,10 +17,12 @@ for EXE in $(ls bin/); do
     echo "$EXE:"
 
     echo "  Single Socket:"
+    export OMP_NUM_THREADS=12
     # Single socket
-    srun --ntasks=1 --cpus-per-task=12 --cpu_bind=sockets ./bin/$EXE
+    srun --ntasks=1 --cpus-per-task=$OMP_NUM_THREADS --cpu_bind=sockets ./bin/$EXE
 
     echo "  Dual Socket:"
+    export OMP_NUM_THREADS=24
     # Dual socket
-    srun --ntasks=1 --cpus-per-task=24 ./bin/$EXE
+    srun --ntasks=1 --cpus-per-task=$OMP_NUM_THREADS ./bin/$EXE
 done

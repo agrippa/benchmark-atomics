@@ -19,10 +19,12 @@ for EXE in $(ls bin/); do
     echo "$EXE:"
 
     echo "  Single Socket:"
+    export OMP_NUM_THREADS=8
     # Single socket
-    aprun -n 1 -N 1 -cc none -d 8 ./bin/$EXE
+    aprun -n 1 -N 1 -cc none -d $OMP_NUM_THREADS ./bin/$EXE
 
     echo "  Dual Socket:"
+    export OMP_NUM_THREADS=16
     # Dual socket
-    aprun -n 1 -N 1 -cc none -d 16 ./bin/$EXE
+    aprun -n 1 -N 1 -cc none -d $OMP_NUM_THREADS ./bin/$EXE
 done
