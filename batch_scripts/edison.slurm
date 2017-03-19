@@ -14,7 +14,13 @@ ulimit -c unlimited
 cd $SLURM_SUBMIT_DIR
 
 for EXE in $(ls bin/); do
-    echo "===== $EXE ====="
-    # Stay in one socket
-    srun --ntasks=1 --cpus-per-task=12 --cpu_bind=verbose,sockets ./bin/$EXE
+    echo "$EXE:"
+
+    echo "  Single Socket:"
+    # Single socket
+    srun --ntasks=1 --cpus-per-task=12 --cpu_bind=sockets ./bin/$EXE
+
+    echo "  Dual Socket:"
+    # Dual socket
+    srun --ntasks=1 --cpus-per-task=24 ./bin/$EXE
 done
